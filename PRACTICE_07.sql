@@ -1,0 +1,74 @@
+CREATE DATABASE FINTECH_04;
+
+USE FINTECH_04;
+
+-- LOAD DATA-SET IN SQL WORKSET:
+
+-- STEP:01 SELECT DATABASE AND RIGHT CLICK ON DATABASE.
+-- STEP:02 SELECT "TABLE IMPORT DATA WIZARD" ( THIS WORK ONLY CSV FILE OR JSON FILE ).
+-- STEP:03 GIVE PATH FOR WHERE YOU CAN SAVE CSV OR JSON FILE.
+-- STEP:04 CLICK "NEXT" BUTTON UPTO FINISH PROCESS.
+
+SELECT * FROM WORKER;
+
+
+SELECT *, CASE WHEN SALARY>400000 THEN "EXCELLENT" 
+WHEN SALARY>200000 THEN "GOOD" ELSE "NORMAL" 
+END AS "SALARY-STATUS" FROM WORKER;
+
+create table Student_marks (student_id int primary key,
+							student_name varchar(50) NOT NULL,
+							English int,
+							Hindi int,
+							Maths int);
+							
+Insert into Student_marks values (1, 'Jayant', 56, 19, 72),
+								 (2, 'Ajay', 82, 34, 60),
+                                 (3, 'Reena', 66, 99, 84),
+                                 (4, 'Raj', 71, 95, 84),
+                                 (5, 'Nishant', 97, 69, 91),
+                                 (6, 'Jaimeen', 13, 19, 32),
+                                 (7, 'Sruti', 11, 100, 53),
+                                 (8, 'Daksh', 13, 53, 12),
+                                 (9, 'Anand', 45, 62, 47),
+                                 (10, 'Rajat', 77, 23, 53);
+                                 
+select * from student_marks;
+-- 01(01) TOTAL MARKS ALL SUBJECTS :-
+SELECT * , (English+Hindi+Maths) AS TOTAL_MARKS FROM student_marks;
+-- 01(02) TOTAL MARKS ALL SUBJECTS :-
+ALTER TABLE STUDENT_MARKS ADD COLUMN TOTAL_MARKS INT;
+SELECT * FROM STUDENT_MARKS;
+
+UPDATE STUDENT_MARKS SET TOTAL_MARKS = ENGLISH+HINDI+MATHS;  -- SUMS QUERY
+SELECT * FROM STUDENT_MARKS;
+
+-- 02 MARKS-STATUS
+SELECT STUDENT_ID , STUDENT_NAME , TOTAL_MARKS , 
+CASE 
+WHEN TOTAL_MARKS>250 THEN "A+" 
+WHEN TOTAL_MARKS>200 THEN "B+" 
+WHEN TOTAL_MARKS>150 THEN "C+" 
+ELSE "FAIL" END AS "GRADE" FROM STUDENT_MARKS;
+
+-- INNER QUERY :-
+
+SELECT * , CASE 
+WHEN TOTAL_MARK>250 THEN "A+"
+WHEN TOTAL_MARK>200 THEN "B+"
+WHEN TOTAL_MARK>150 THEN "C+"
+ELSE "FAIL"
+END AS "GRADE" FROM
+(
+SELECT * , (ENGLISH+HINDI+MATHS) AS TOTAL_MARK FROM STUDENT_MARKS
+) AS T1;
+
+
+-- EXTRA :-
+ALTER TABLE STUDENT_MARKS RENAME COLUMN student_id to STUDENT_ID;
+ALTER TABLE STUDENT_MARKS RENAME COLUMN student_name to STUDENT_NAME;
+ALTER TABLE STUDENT_MARKS RENAME COLUMN English to ENGLISH;
+ALTER TABLE STUDENT_MARKS RENAME COLUMN Hindi to HINDI;
+ALTER TABLE STUDENT_MARKS RENAME COLUMN Maths to MATHS;
+
+SELECT * FROM STUDENT_MARKS;
